@@ -1,0 +1,25 @@
+:root {
+  /* --bg: #000000; */
+}
+
+/* Apply the page background to the root HTML element so it displays */
+html {
+  background-image: linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)), url('/background.jpg');
+  background-color: #000000;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* small project defaults retained */
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  color: #e6eef8;
+}
