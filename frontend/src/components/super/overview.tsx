@@ -1,115 +1,163 @@
 "use client"
 
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Users, Wifi, CreditCard, ArrowUpRight, ArrowDownRight } from "lucide-react"
+import { motion } from "framer-motion"
+
 export function SuperOverview() {
   return (
     <div className="space-y-4">
       {/* Stats Cards */}
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-        <div className="p-4 rounded-lg glass shadow-lg relative overflow-hidden transform transition-transform duration-200 hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(0,255,140,0.12)] bg-[#2a6939ff]/40 backdrop-blur-sm">
-          <div className="flex justify-between items-start mb-2">
-            <div>
-              <div className="text-sm font-medium text-brand-green text-green-300">Total Admins</div>
+        <motion.div whileHover={{ y: -5 }} transition={{ duration: 0.2 }}>
+          <Card className="glass border-brand-green/30 shadow-lg overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-r from-brand-green/10 to-transparent"></div>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 relative z-10">
+              <CardTitle className="text-sm font-medium text-brand-green">Total Admins</CardTitle>
+              <div className="h-8 w-8 rounded-full bg-brand-green/20 flex items-center justify-center">
+                <Users className="h-4 w-4 text-brand-green" />
+              </div>
+            </CardHeader>
+            <CardContent className="relative z-10">
               <div className="text-2xl font-bold text-white">7</div>
-            </div>
-            <div className="h-8 w-8 rounded-full flex items-center justify-center">👥</div>
-          </div>
-          <div className="text-xs text-gray-400">
-            <span className="text-green-500 mr-1">60%</span>
-            from last week
-          </div>
-        </div>
+              <p className="text-xs text-gray-400 flex items-center">
+                <span className="text-green-500 flex items-center mr-1">
+                  <ArrowUpRight className="h-3 w-3 mr-1" />
+                  60%
+                </span>
+                from last week
+              </p>
+            </CardContent>
+          </Card>
+        </motion.div>
 
-        <div className="p-4 rounded-lg glass shadow-lg relative overflow-hidden transform transition-transform duration-200 hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(0,255,140,0.12)] bg-[#2a6939ff]/40 backdrop-blur-sm">
-          <div className="flex justify-between items-start mb-2">
-            <div>
-              <div className="text-sm font-medium text-brand-green text-green-300">Active Sessions</div>
+        <motion.div whileHover={{ y: -5 }} transition={{ duration: 0.2 }}>
+          <Card className="glass border-brand-green/30 shadow-lg overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-r from-brand-green/10 to-transparent"></div>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 relative z-10">
+              <CardTitle className="text-sm font-medium text-brand-green">Active Sessions</CardTitle>
+              <div className="h-8 w-8 rounded-full bg-brand-green/20 flex items-center justify-center">
+                <Wifi className="h-4 w-4 text-brand-green" />
+              </div>
+            </CardHeader>
+            <CardContent className="relative z-10">
               <div className="text-2xl font-bold text-white">10</div>
-            </div>
-            <div className="h-8 w-8 rounded-full flex items-center justify-center">📶</div>
-          </div>
-          <div className="text-xs text-gray-400">
-            <span className="text-green-500 mr-1">5%</span>
-            from last month
-          </div>
-        </div>
+              <p className="text-xs text-gray-400 flex items-center">
+                <span className="text-green-500 flex items-center mr-1">
+                  <ArrowUpRight className="h-3 w-3 mr-1" />
+                  5%
+                </span>
+                from last month
+              </p>
+            </CardContent>
+          </Card>
+        </motion.div>
 
-        <div className="p-4 rounded-lg glass shadow-lg relative overflow-hidden transform transition-transform duration-200 hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(0,255,140,0.12)] bg-[#2a6939ff]/40 backdrop-blur-sm">
-          <div className="flex justify-between items-start mb-2">
-            <div>
-              <div className="text-sm font-medium text-brand-green text-green-300">Revenue (Today)</div>
+        <motion.div whileHover={{ y: -5 }} transition={{ duration: 0.2 }}>
+          <Card className="glass border-brand-green/30 shadow-lg overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-r from-brand-green/10 to-transparent"></div>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 relative z-10">
+              <CardTitle className="text-sm font-medium text-brand-green">Revenue (Today)</CardTitle>
+              <div className="h-8 w-8 rounded-full bg-brand-green/20 flex items-center justify-center">
+                <CreditCard className="h-4 w-4 text-brand-green" />
+              </div>
+            </CardHeader>
+            <CardContent className="relative z-10">
               <div className="text-2xl font-bold text-white">KES 4</div>
-            </div>
-            <div className="h-8 w-8 rounded-full flex items-center justify-center">💳</div>
-          </div>
-          <div className="text-xs text-gray-400">
-            <span className="text-red-500 mr-1">0.3%</span>
-            from yesterday
-          </div>
-        </div>
+              <p className="text-xs text-gray-400 flex items-center">
+                <span className="text-red-500 flex items-center mr-1">
+                  <ArrowDownRight className="h-3 w-3 mr-1" />
+                  0.3%
+                </span>
+                from yesterday
+              </p>
+            </CardContent>
+          </Card>
+        </motion.div>
 
-        <div className="p-4 rounded-lg glass shadow-lg relative overflow-hidden transform transition-transform duration-200 hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(0,255,140,0.12)] bg-[#2a6939ff]/40 backdrop-blur-sm">
-          <div className="flex justify-between items-start mb-2">
-            <div>
-              <div className="text-sm font-medium text-brand-green text-green-300">Revenue (Month)</div>
+        <motion.div whileHover={{ y: -5 }} transition={{ duration: 0.2 }}>
+          <Card className="glass border-brand-green/30 shadow-lg overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-r from-brand-green/10 to-transparent"></div>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 relative z-10">
+              <CardTitle className="text-sm font-medium text-brand-green">Revenue (Month)</CardTitle>
+              <div className="h-8 w-8 rounded-full bg-brand-green/20 flex items-center justify-center">
+                <CreditCard className="h-4 w-4 text-brand-green" />
+              </div>
+            </CardHeader>
+            <CardContent className="relative z-10">
               <div className="text-2xl font-bold text-white">KES 200</div>
-            </div>
-            <div className="h-8 w-8 rounded-full flex items-center justify-center">💳</div>
-          </div>
-          <div className="text-xs text-gray-400">
-            <span className="text-green-500 mr-1">1%</span>
-            from last month
-          </div>
-        </div>
+              <p className="text-xs text-gray-400 flex items-center">
+                <span className="text-green-500 flex items-center mr-1">
+                  <ArrowUpRight className="h-3 w-3 mr-1" />
+                  1%
+                </span>
+                from last month
+              </p>
+            </CardContent>
+          </Card>
+        </motion.div>
       </div>
 
       {/* Charts and Analytics */}
       <div className="grid gap-4 md:grid-cols-2">
-        <div className="p-4 rounded-lg glass border shadow-lg h-[28.5rem] bg-black/40 backdrop-blur-sm border-green-500/40 hover:shadow-[0_18px_50px_rgba(0,255,140,0.12)]">
-          <div className="text-brand-green text-xl font-bold mb-1 text-green-300">Revenue Overview</div>
-          <div className="text-sm text-gray-400 mb-4">Daily revenue for the past 30 days</div>
-          <div className="h-[22rem] w-full flex items-center justify-center text-gray-400 border border-green-500/40 rounded-md p-6 bg-black/20">
-            <div className="text-center w-full text-gray-300">
-              <div className="mb-2 text-brand-green">📊</div>
-              Revenue chart will be displayed here
+        <Card className="glass border-brand-green/30 shadow-lg">
+          <CardHeader>
+            <CardTitle className="text-brand-green">Revenue Overview</CardTitle>
+            <CardDescription>Daily revenue for the past 30 days</CardDescription>
+          </CardHeader>
+          <CardContent className="h-80">
+            <div className="h-full w-full flex items-center justify-center text-gray-400 border border-brand-green/20 rounded-md">
+              <div className="text-center p-4">
+                <div className="mb-2 text-brand-green">📊</div>
+                Revenue chart will be displayed here
+              </div>
             </div>
-          </div>
-        </div>
+          </CardContent>
+        </Card>
 
-        <div className="p-4 rounded-lg glass border shadow-lg h-[28.5rem] bg-black/40 backdrop-blur-sm border-green-500/40 hover:shadow-[0_18px_50px_rgba(0,255,140,0.12)]">
-          <div className="text-brand-green text-xl font-bold mb-1 text-green-300">Admins Activity</div>
-          <div className="text-sm text-gray-400 mb-4">Active Admins over time</div>
-          <div className="h-[22rem] w-full flex items-center justify-center text-gray-400 border border-green-500/40 rounded-md p-6 bg-black/20">
-            <div className="text-center w-full text-gray-300">
-              <div className="mb-2 text-brand-green">👥</div>
-              Admins activity chart will be displayed here
+        <Card className="glass border-brand-green/30 shadow-lg">
+          <CardHeader>
+            <CardTitle className="text-brand-green">Admins Activity</CardTitle>
+            <CardDescription>Active Admins over time</CardDescription>
+          </CardHeader>
+          <CardContent className="h-80">
+            <div className="h-full w-full flex items-center justify-center text-gray-400 border border-brand-green/20 rounded-md">
+              <div className="text-center p-4">
+                <div className="mb-2 text-brand-green">👥</div>
+                Admins activity chart will be displayed here
+              </div>
             </div>
-          </div>
-        </div>
+          </CardContent>
+        </Card>
       </div>
 
       {/* Recent Activity */}
-      <div className="p-4 rounded-lg glass border border-brand-green/30 shadow-lg bg-black/40 backdrop-blur-sm border-green-500/40">
-        <div className="text-brand-green text-xl font-bold text-green-300">Recent Activity</div>
-        <div className="text-sm text-gray-400">Latest system events and admin actions</div>
-        <div className="space-y-4 mt-4">
-          <div className="border-b border-green-500/40 pb-4">
-            <div className="flex justify-between items-center">
-              <div>
-                <p className="font-medium text-white">Admin john@zmooth.local updated bandwidth policy</p>
+      <Card className="glass border-brand-green/30 shadow-lg">
+        <CardHeader>
+          <CardTitle className="text-brand-green">Recent Activity</CardTitle>
+          <CardDescription>Latest system events and admin actions</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            <div className="border-b pb-4 border-brand-green/10">
+              <div className="flex justify-between items-center">
+                <div>
+                  <p className="font-medium text-white">Admin john@zmooth.local updated bandwidth policy</p>
+                </div>
+                <span className="text-sm text-gray-400 bg-brand-green/10 px-2 py-1 rounded-full">33 minutes ago</span>
               </div>
-              <span className="text-sm text-gray-400 px-2 py-1">33 minutes ago</span>
+            </div>
+            <div className="border-b pb-4 border-brand-green/10">
+              <div className="flex justify-between items-center">
+                <div>
+                  <p className="font-medium text-white">root@zmooth.local created user operator@zmooth.local</p>
+                </div>
+                <span className="text-sm text-gray-400 bg-brand-green/10 px-2 py-1 rounded-full">6 hour ago</span>
+              </div>
             </div>
           </div>
-          <div className="border-b border-green-500/40 pb-4">
-            <div className="flex justify-between items-center">
-              <div>
-                <p className="font-medium text-white">root@zmooth.local created user operator@zmooth.local</p>
-              </div>
-              <span className="text-sm text-gray-400 px-2 py-1">6 hour ago</span>
-            </div>
-          </div>
-        </div>
-      </div>
+        </CardContent>
+      </Card>
     </div>
   )
 }

@@ -1,12 +1,15 @@
 "use client"
-import type React from "react"
-import { useState, useEffect } from "react"
-import { useNavigate } from 'react-router-dom'
-const Search = ({ className }: { className?: string }) => <span className={className}>🔎</span>
-// local toast fallback
-const toast = (opts: { title?: string; description?: string }) => {
-  console.log("TOAST:", opts.title, opts.description)
-}
+import { useState } from "react"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+import { Badge } from "@/components/ui/badge"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Checkbox } from "@/components/ui/checkbox"
+import { Search, Download, Filter } from "lucide-react"
+import { toast } from "@/hooks/use-toast"
+import { useNavigate } from "react-router-dom"
 
 // Sample activity logs data
 const initialLogs = [
@@ -58,24 +61,13 @@ const initialLogs = [
 ]
 
 function ActivityLogs() {
-  const router = useNavigate()
+  const navigate = useNavigate()
   const [logs] = useState(initialLogs)
   const [selectedLogs, setSelectedLogs] = useState<string[]>([])
   const [selectAll, setSelectAll] = useState(false)
   const [searchQuery, setSearchQuery] = useState("")
   const [levelFilter, setLevelFilter] = useState<string>("all")
   const [categoryFilter, setCategoryFilter] = useState<string>("all")
-  const [levelOpen, setLevelOpen] = useState(false)
-  const [categoryOpen, setCategoryOpen] = useState(false)
-
-  useEffect(() => {
-    const onDocClick = () => {
-      setLevelOpen(false)
-      setCategoryOpen(false)
-    }
-    document.addEventListener('click', onDocClick)
-    return () => document.removeEventListener('click', onDocClick)
-  }, [])
 
   // Handle checkbox changes
   const handleCheckboxChange = (id: string) => {
@@ -141,122 +133,160 @@ function ActivityLogs() {
     })
   }
 
-  
+  const getLevelBadgeVariant = (level: string) => {
+    switch (level) {
+      case "ERROR":
+        return "destructive"
+      default:
+        return "outline"
+    }
+  }
 
   return (
-    <div className="py-6 px-8 text-white">
-      <div className="w-full mx-auto">
-        <div className="mb-6 flex items-center">
-          <button onClick={() => router(-1)} className="px-3 py-2 rounded bg-white text-black">← Back</button>
-          <div className="flex-1 text-center">
-            <h2 className="text-4xl font-extrabold text-green-400 drop-shadow-lg">Activity Logs</h2>
-            <p className="text-sm text-gray-300">Monitor system activities and user actions</p>
-          </div>
-        </div>
-
-          <div className="mb-4 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="relative">
-              <button type="button" onClick={(e) => { e.stopPropagation(); setCategoryOpen(false); setLevelOpen((s) => !s) }} className="p-2 bg-[#050705] border border-green-700 rounded text-white min-w-[120px] flex items-center justify-between">
-                <span>{levelFilter === 'all' ? 'All Levels' : levelFilter}</span>
-                <svg className="w-4 h-4 text-gray-300" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
-              </button>
-              {levelOpen && (
-                <div className="absolute mt-2 w-40 bg-[#07100b] border border-green-700 rounded-lg overflow-hidden shadow-lg z-30">
-                  <button type="button" onClick={() => { setLevelFilter('all'); setLevelOpen(false) }} className={`block w-full text-left px-4 py-2 ${levelFilter === 'all' ? 'bg-lime-400 text-black' : 'text-white'}`}>All Levels</button>
-                  <button type="button" onClick={() => { setLevelFilter('INFO'); setLevelOpen(false) }} className={`block w-full text-left px-4 py-2 ${levelFilter === 'INFO' ? 'bg-lime-400 text-black' : 'text-white'}`}>INFO</button>
-                  <button type="button" onClick={() => { setLevelFilter('WARN'); setLevelOpen(false) }} className={`block w-full text-left px-4 py-2 ${levelFilter === 'WARN' ? 'bg-lime-400 text-black' : 'text-white'}`}>WARN</button>
-                  <button type="button" onClick={() => { setLevelFilter('ERROR'); setLevelOpen(false) }} className={`block w-full text-left px-4 py-2 ${levelFilter === 'ERROR' ? 'bg-lime-400 text-black' : 'text-white'}`}>ERROR</button>
-                </div>
-              )}
+    <div className="space-y-4">
+      <Card className="glass border-brand-green/30 shadow-lg">
+        <CardHeader className="flex flex-col gap-4">
+          <div className="flex flex-row items-center justify-between w-full">
+            <Button
+              variant="ghost"
+              className="bg-gray-200 text-gray-700 border-gray-300 hover:bg-gray-300 hover:text-gray-900 disabled:bg-gray-100 disabled:text-gray-400"
+              onClick={() => navigate(-1)}
+            >
+              ← Back
+            </Button>
+            <div className="flex-1 flex flex-col items-center">
+              <CardTitle className="text-brand-green">Activity Logs</CardTitle>
+              <CardDescription>Monitor system activities and user actions</CardDescription>
             </div>
-
-            <div className="relative">
-              <button type="button" onClick={(e) => { e.stopPropagation(); setLevelOpen(false); setCategoryOpen((s) => !s) }} className="p-2 bg-[#050705] border border-green-700 rounded text-white min-w-[160px] flex items-center justify-between">
-                <span>{categoryFilter === 'all' ? 'All Categories' : categoryFilter}</span>
-                <svg className="w-4 h-4 text-gray-300" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
-              </button>
-              {categoryOpen && (
-                <div className="absolute mt-2 w-56 bg-[#07100b] border border-green-700 rounded-lg overflow-hidden shadow-lg z-30">
-                  <button type="button" onClick={() => { setCategoryFilter('all'); setCategoryOpen(false) }} className={`block w-full text-left px-4 py-2 ${categoryFilter === 'all' ? 'bg-lime-400 text-black' : 'text-white'}`}>All Categories</button>
-                  <button type="button" onClick={() => { setCategoryFilter('Authentication'); setCategoryOpen(false) }} className={`block w-full text-left px-4 py-2 ${categoryFilter === 'Authentication' ? 'bg-lime-400 text-black' : 'text-white'}`}>Authentication</button>
-                  <button type="button" onClick={() => { setCategoryFilter('Security'); setCategoryOpen(false) }} className={`block w-full text-left px-4 py-2 ${categoryFilter === 'Security' ? 'bg-lime-400 text-black' : 'text-white'}`}>Security</button>
-                  <button type="button" onClick={() => { setCategoryFilter('Plan Management'); setCategoryOpen(false) }} className={`block w-full text-left px-4 py-2 ${categoryFilter === 'Plan Management' ? 'bg-lime-400 text-black' : 'text-white'}`}>Plan Management</button>
-                  <button type="button" onClick={() => { setCategoryFilter('User Management'); setCategoryOpen(false) }} className={`block w-full text-left px-4 py-2 ${categoryFilter === 'User Management' ? 'bg-lime-400 text-black' : 'text-white'}`}>User Management</button>
-                  <button type="button" onClick={() => { setCategoryFilter('System'); setCategoryOpen(false) }} className={`block w-full text-left px-4 py-2 ${categoryFilter === 'System' ? 'bg-lime-400 text-black' : 'text-white'}`}>System</button>
-                </div>
-              )}
-            </div>
-
-            <button onClick={handleClearFilters} className="px-3 py-2 border border-green-700 text-green-300 rounded">Clear</button>
           </div>
-
-          <div className="flex items-center gap-3">
-            <div className="relative">
-              <Search className="w-5 h-5 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
-              <input
-                placeholder="Search logs..."
-                value={searchQuery}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchQuery(e.target.value)}
-                className="pl-10 pr-3 py-2 bg-[#07100b] border border-green-700 rounded text-white"
-              />
+        </CardHeader>
+        <CardContent>
+          <div className="flex flex-wrap gap-2 items-center mb-4 justify-between">
+            <div className="flex gap-2 items-center">
+              <Select value={levelFilter} onValueChange={setLevelFilter}>
+                <SelectTrigger className="w-[120px] bg-brand-darkgray border-brand-green/30 text-white focus-visible:ring-brand-green">
+                  <SelectValue placeholder="Level" />
+                </SelectTrigger>
+                <SelectContent className="glass border-brand-green/30">
+                  <SelectItem value="all">All Levels</SelectItem>
+                  <SelectItem value="INFO">INFO</SelectItem>
+                  <SelectItem value="WARN">WARN</SelectItem>
+                  <SelectItem value="ERROR">ERROR</SelectItem>
+                </SelectContent>
+              </Select>
+              <Select value={categoryFilter} onValueChange={setCategoryFilter}>
+                <SelectTrigger className="w-[160px] bg-brand-darkgray border-brand-green/30 text-white focus-visible:ring-brand-green">
+                  <SelectValue placeholder="Category" />
+                </SelectTrigger>
+                <SelectContent className="glass border-brand-green/30">
+                  <SelectItem value="all">All Categories</SelectItem>
+                  <SelectItem value="Authentication">Authentication</SelectItem>
+                  <SelectItem value="Security">Security</SelectItem>
+                  <SelectItem value="Plan Management">Plan Management</SelectItem>
+                  <SelectItem value="User Management">User Management</SelectItem>
+                  <SelectItem value="System">System</SelectItem>
+                </SelectContent>
+              </Select>
+              <Button
+                variant="outline"
+                className="border-brand-green/50 text-brand-green hover:bg-brand-neongreen bg-transparent"
+                onClick={handleClearFilters}
+              >
+                <Filter className="h-4 w-4 mr-2" />
+                Clear
+              </Button>
             </div>
-            <button className="px-4 py-2 bg-green-500 text-black rounded" onClick={handleExportLogs}>⬇️ Export</button>
+            <div className="flex gap-2 items-center">
+              <div className="relative">
+                <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                <Input
+                  placeholder="Search logs..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="pl-8 w-[200px] bg-brand-darkgray border-brand-green/30 text-white focus-visible:ring-brand-green"
+                />
+              </div>
+              <Button
+                className="flex items-center gap-1 bg-brand-green text-brand-black hover:bg-brand-neongreen"
+                onClick={handleExportLogs}
+              >
+                <Download className="h-4 w-4" />
+                <span>Export</span>
+              </Button>
+            </div>
           </div>
-        </div>
-
-        <div className="bg-[#050705] border border-green-700 rounded-xl p-4 overflow-hidden h-90">
-          <div className="overflow-auto">
-            <table className="overflow-auto w-full text-left table-fixed">
-              <thead>
-                <tr className="text-sm text-gray-300 border-b border-green-700">
-                  <th className="w-12 py-3 pl-3 align-middle">
-                    <input type="checkbox" checked={selectAll} onChange={() => handleSelectAllChange()} className="w-4 h-4 border-green-600" />
-                  </th>
-                  <th className="py-3 align-middle">Timestamp</th>
-                  <th className="align-middle">Level</th>
-                  <th className="align-middle">Action</th>
-                  <th className="align-middle">Actor</th>
-                  <th className="align-middle">Details</th>
-                  <th className="align-middle">Category</th>
-                </tr>
-              </thead>
-              <tbody>
+          <div className="rounded-md border border-brand-green/30">
+            <Table>
+              <TableHeader>
+                <TableRow className="border-b border-brand-green/30 hover:bg-brand-green/5">
+                  <TableHead className="w-[50px] border-0">
+                    <Checkbox
+                      checked={selectAll}
+                      onCheckedChange={handleSelectAllChange}
+                      className="data-[state=checked]:bg-brand-green data-[state=checked]:border-brand-green"
+                    />
+                  </TableHead>
+                  <TableHead className="border-0">Timestamp</TableHead>
+                  <TableHead className="border-0">Level</TableHead>
+                  <TableHead className="border-0">Action</TableHead>
+                  <TableHead className="border-0">Actor</TableHead>
+                  <TableHead className="border-0">Details</TableHead>
+                  <TableHead className="border-0">Category</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
                 {filteredLogs.map((log) => (
-                  <tr key={log.id} className="h-16 border-b border-green-700 hover:bg-black/20">
-                    <td className="py-3 pl-3 align-middle">
-                      <input type="checkbox" checked={selectedLogs.includes(log.id)} onChange={() => handleCheckboxChange(log.id)} className="w-4 h-4 border-green-600" />
-                    </td>
-                    <td className="py-3 align-middle font-mono text-sm">{log.timestamp}</td>
-                    <td className="align-middle">
-                      <span className={
-                        log.level === "WARN"
-                          ? "bg-yellow-400 text-yellow-900 px-2 py-1 rounded"
-                          : log.level === "INFO"
-                          ? "bg-green-700 text-white px-2 py-1 rounded"
-                          : log.level === "ERROR"
-                          ? "bg-red-600 text-white px-2 py-1 rounded"
-                          : "px-2 py-1"
-                      }>{log.level}</span>
-                    </td>
-                    <td className="py-3 align-middle font-medium">{log.action}</td>
-                    <td className="align-middle">{log.actor}</td>
-                    <td className="align-middle max-w-xs truncate" title={log.details}>{log.details}</td>
-                    <td className="align-middle">
-                      <span className="inline-block text-sm px-3 py-1 rounded-full border border-green-700 text-white bg-[#071014]">{log.category}</span>
-                    </td>
-                  </tr>
+                  <TableRow key={log.id} className="border-b border-brand-green/20 hover:bg-brand-green/5">
+                    <TableCell className="border-0">
+                      <Checkbox
+                        checked={selectedLogs.includes(log.id)}
+                        onCheckedChange={() => handleCheckboxChange(log.id)}
+                        className="data-[state=checked]:bg-brand-green data-[state=checked]:border-brand-green"
+                      />
+                    </TableCell>
+                    <TableCell className="font-mono text-sm border-0">{log.timestamp}</TableCell>
+                    <TableCell className="border-0">
+                      <Badge
+                        variant={getLevelBadgeVariant(log.level)}
+                        className={
+                          log.level === "WARN"
+                            ? "bg-yellow-400 text-yellow-900 border-yellow-400 hover:bg-yellow-500"
+                            : log.level === "INFO"
+                            ? "bg-green-700 text-white border-green-700 hover:bg-green-800"
+                            : ""
+                        }
+                      >
+                        {log.level}
+                      </Badge>
+                    </TableCell>
+                    <TableCell className="font-medium border-0">{log.action}</TableCell>
+                    <TableCell className="border-0">{log.actor}</TableCell>
+                    <TableCell className="border-0 max-w-xs truncate" title={log.details}>
+                      {log.details}
+                    </TableCell>
+                    <TableCell className="border-0">
+                      <Badge variant="outline" className="border-brand-green/40">
+                        {log.category}
+                      </Badge>
+                    </TableCell>
+                  </TableRow>
                 ))}
                 {filteredLogs.length === 0 && (
-                  <tr>
-                    <td colSpan={7} className="py-6 text-center text-white/60">No activity logs found.</td>
-                  </tr>
+                  <TableRow>
+                    <TableCell className="text-center text-white/60 py-8" colSpan={7}>
+                      No activity logs found.
+                    </TableCell>
+                  </TableRow>
                 )}
-              </tbody>
-            </table>
+              </TableBody>
+            </Table>
           </div>
-        </div>
-      </div>
+          <div className="mt-4 text-sm text-white/60">
+            Showing {filteredLogs.length} of {logs.length} log entries
+            {selectedLogs.length > 0 && ` • ${selectedLogs.length} selected`}
+          </div>
+        </CardContent>
+      </Card>
     </div>
   )
 }

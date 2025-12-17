@@ -1,8 +1,15 @@
-"use client"
-
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { useAuth } from "../../contexts/AuthContext"
+import { Button } from "@/components/ui/button"
+import { Menu, Bell, User, LogOut } from "lucide-react"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 
 interface SuperHeaderProps {
   toggleSidebar: () => void
@@ -10,47 +17,64 @@ interface SuperHeaderProps {
 
 export function SuperHeader({ toggleSidebar }: SuperHeaderProps) {
   const navigate = useNavigate()
-  const { logout } = useAuth()
-  const [notifications] = useState(3)
-  const [openMenu, setOpenMenu] = useState(false)
-
-  const handleLogout = async () => {
-    await logout()
-    navigate('/login')
+  const handleLogout = () => {
+    navigate("/login")
   }
+  const [notifications] = useState(3)
 
   return (
-    <header className="glass border-b border-brand-green/30 h-16 flex items-center px-4 sticky top-0 z-50 bg-black/90 backdrop-blur-sm">
+    <header className="glass border-b border-brand-green/30 h-16 flex items-center px-4 sticky top-0 z-30">
       <div className="flex items-center justify-between w-full">
         <div className="flex items-center">
-          <button onClick={toggleSidebar} className="mr-2 p-2 rounded text-white hover:bg-brand-green/10 text-xl">
-            ☰
-          </button>
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={toggleSidebar}
+            className="mr-2 text-white hover:bg-brand-green/10"
+          >
+            <Menu className="h-5 w-5" />
+          </Button>
           <h1 className="text-lg font-semibold hidden md:block text-brand-green">Admin++</h1>
         </div>
 
         <div className="flex items-center space-x-2">
-          <button className="relative p-2 rounded text-white hover:bg-brand-green/10 text-xl">
-            🔔
+          {/* Notifications */}
+          <Button variant="ghost" size="icon" className="relative text-white hover:bg-brand-green/10">
+            <Bell className="h-5 w-5 text-brand-green" />
             {notifications > 0 && (
               <span className="absolute top-1 right-1 flex h-4 w-4 items-center justify-center rounded-full bg-brand-green text-[10px] text-brand-black font-bold">
                 {notifications}
               </span>
             )}
-          </button>
+          </Button>
 
-          <div className="relative">
-            <button onClick={() => setOpenMenu((s) => !s)} className="rounded-full h-8 w-8 bg-brand-green text-brand-black flex items-center justify-center text-sm">
-              👤
-            </button>
-            {openMenu && (
-              <div className="absolute right-0 mt-2 w-40 bg-[#07100b] border border-brand-green/30 rounded-md shadow-lg p-2 text-white">
-                <button className="w-full text-left px-2 py-2 hover:bg-brand-green/10 rounded" onClick={() => navigate('/profile')}>Profile</button>
-                <hr className="my-1 border-brand-green/20" />
-                <button className="w-full text-left px-2 py-2 text-red-400 hover:bg-red-500/10 rounded" onClick={handleLogout}>Logout</button>
-              </div>
-            )}
-          </div>
+          {/* User Menu */}
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" size="icon" className="rounded-full h-8 w-8 bg-brand-green text-brand-black">
+                <User className="h-4 w-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="glass border-brand-green/30">
+              <DropdownMenuLabel className="text-brand-green">Admin++ Account</DropdownMenuLabel>
+              <DropdownMenuSeparator className="bg-brand-green/30" />
+              <DropdownMenuItem
+                className="cursor-pointer text-white hover:bg-brand-green/10"
+                onClick={() => navigate("/profile")}
+              >
+                <User className="mr-2 h-4 w-4 text-brand-green" />
+                <span>Profile</span>
+              </DropdownMenuItem>
+              <DropdownMenuSeparator className="bg-brand-green/30" />
+              <DropdownMenuItem
+                className="text-red-500 focus:text-red-500 cursor-pointer hover:bg-red-500/10"
+                onClick={handleLogout}
+              >
+                <LogOut className="mr-2 h-4 w-4" />
+                <span>Logout</span>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
       </div>
     </header>
