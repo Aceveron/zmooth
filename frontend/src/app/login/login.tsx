@@ -90,7 +90,11 @@ export default function LoginPage() {
     <div className="min-h-screen flex items-center justify-center bg-background p-4">
       <Card className="w-full max-w-md">
         <CardHeader>
+<<<<<<< HEAD
           <CardTitle>Login</CardTitle>
+=======
+          <CardTitle>Admin Login</CardTitle>
+>>>>>>> d3375ae71d9804332c085e91e527e5066b9e332a
         </CardHeader>
         <CardContent>
           <form onSubmit={onSubmit} className="space-y-4">

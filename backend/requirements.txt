@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Core Framework
 fastapi==0.109.0
 uvicorn[standard]==0.27.0
@@ -47,3 +48,27 @@ httpx==0.26.0
 # Utilities
 python-dateutil==2.8.2
 pytz==2024.1
+=======
+annotated-doc==0.0.4
+annotated-types==0.7.0
+anyio==4.12.0
+click==8.3.1
+colorama==0.4.6
+exceptiongroup==1.3.1
+fastapi==0.124.4
+h11==0.16.0
+idna==3.11
+pydantic==2.12.5
+pydantic_core==2.41.5
+python-dotenv==1.2.1
+starlette==0.50.0
+typing-inspection==0.4.2
+typing_extensions==4.15.0
+uvicorn==0.38.0
+sqlalchemy==2.0.45
+psycopg[binary]==3.3.0
+passlib[bcrypt]==1.7.4
+PyJWT==2.8.0
+bcrypt==4.0.1
+argon2-cffi
+>>>>>>> d3375ae71d9804332c085e91e527e5066b9e332a

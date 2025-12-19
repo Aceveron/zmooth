@@ -67,7 +67,10 @@ import SuperAdminDashboard from './app/super/page'
 import SuperNotifications from './app/super/notifications'
 import SuperAdminList from './app/super/admin-list'
 import SuperLogs from './app/super/logs'
+<<<<<<< HEAD
 import { ClientHotspot } from './app/portal/client'
+=======
+>>>>>>> d3375ae71d9804332c085e91e527e5066b9e332a
 
 export function App() {
   return (
@@ -163,8 +166,11 @@ export function App() {
         <Route path="admin-list" element={<SuperAdminList />} />
         <Route path="logs" element={<SuperLogs />} />
       </Route>
+<<<<<<< HEAD
       {/* Client Portal */}
       <Route path="/portal/client" element={<ClientHotspot />} />
+=======
+>>>>>>> d3375ae71d9804332c085e91e527e5066b9e332a
     </Routes>
   )
 }
